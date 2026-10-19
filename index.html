@@ -31,7 +31,30 @@
       background: var(--black);
       color: var(--black);
     }
+/* BACKGROUND PHOTOGRAPH */
+.poster {
+  isolation: isolate;
+  overflow: hidden;
+}
 
+.poster::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image:
+    linear-gradient(
+      to bottom,
+      #D58FAB 0%,
+      #D58FAB 35%,
+      rgba(213,143,171,0.8) 55%,
+      rgba(213,143,171,0) 85%
+    ),
+    url("background.jpg");
+  background-size: cover;
+  background-position: center bottom;
+  pointer-events: none;
+}
     /* MAIN POSTER */
     .poster {
       position: relative;
