@@ -1,65 +1,288 @@
+
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#D38DA9">
-<title>Door — Progress Thermometer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#D58FAB">
+  <title>Knock Every Door Brunswick</title>
+
+  <!-- Work Sans font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root{font-family: 'Work Sans', sans-serif;color:#FFF;background:#111}
-*{box-sizing:border-box}
-body{
-  background: #000000;
-  color: #ffffff;
-  font-family: 'Work Sans', sans-serif; 
-  margin:0;min-height:100vh;display:grid;place-items:center;padding:24px}
-.card{width:min(100%,440px);border:3px solid #FFFFFF;padding:32px 25px;text-align:center;box-shadow:9px 9px 0 #D38DA9}
-h1{font-size:clamp(28px,6vw,38px);font-weight:900;letter-spacing:-1.5px;text-transform:uppercase;margin:0 0 8px}
-.subtitle{font-size:13px;letter-spacing:2px;text-transform:uppercase;margin:0 0 18px}
-.star{color:#FFFFFF}
-svg{display:block;margin:10px auto 18px}
-.number{font-size:30px;font-weight:900;letter-spacing:-1px}
-.small{font-size:13px;font-weight:700;margin-top:7px}
-.progress{height:12px;background:#fff;border:2px solid #FFFFFF;margin:22px 0 0;text-align:left}
-.progress-fill{height:100%;background:#D38DA9;width:0}
-.remaining{font-size:12px;margin-top:12px;font-weight:700}
-.star svg, .stars svg { fill: #ffffff; stroke: #ffffff;}
-</style>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    /* COLOURS AND FONTS */
+    :root {
+      --pink: #D58FAB;
+      --black: #080808;
+      --white: #FFFFFF;
+      font-family: 'Work Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--black);
+      color: var(--black);
+    }
+
+    /* MAIN POSTER */
+    .poster {
+      position: relative;
+      width: min(100%, 720px);
+      min-height: 100vh;
+      margin: auto;
+      padding: 55px 35px 45px;
+      background: var(--pink);
+      text-align: center;
+    }
+
+    /* THIN BORDER */
+    .poster::before {
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border: 1.5px solid var(--black);
+      pointer-events: none;
+    }
+
+    /* TITLE */
+    h1 {
+      position: relative;
+      font-size: clamp(30px, 7vw, 54px);
+      font-weight: 900;
+      letter-spacing: -2px;
+      line-height: 1.05;
+      text-transform: uppercase;
+      margin: 30px auto 12px;
+      max-width: 560px;
+    }
+
+    .subtitle {
+      position: relative;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 35px;
+    }
+
+    /* THERMOMETER */
+    .thermometer {
+      display: block;
+      width: 145px;
+      height: 290px;
+      margin: 20px auto 35px;
+    }
+
+    /* COUNTER */
+    .number {
+      position: relative;
+      font-size: clamp(30px, 6vw, 46px);
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .percent {
+      position: relative;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-top: 12px;
+    }
+
+    /* PROGRESS BAR */
+    .progress {
+      position: relative;
+      height: 16px;
+      background: var(--white);
+      border: 2px solid var(--black);
+      margin: 28px 0 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--black);
+      width: 0;
+      transition: width 0.5s ease;
+    }
+
+    .remaining {
+      position: relative;
+      font-size: 13px;
+      font-weight: 700;
+      margin-top: 14px;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      margin-top: 50px;
+      padding-top: 25px;
+      border-top: 1px solid var(--black);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .stars {
+      font-size: 28px;
+      letter-spacing: 8px;
+      margin-bottom: 12px;
+    }
+
+    /* MOBILE */
+    @media (max-width: 480px) {
+      .poster {
+        padding: 45px 28px 35px;
+      }
+
+      h1 {
+        font-size: 34px;
+      }
+
+      .number {
+        font-size: 30px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<main class="card">
-<h1>Knock Every Door Brunswick</h1>
-<div class="subtitle"> ★ For the socialists ★</div>
-<svg viewBox="0 0 120 270" width="120" height="270" role="img" aria-label="Goal progress thermometer">
-<defs><clipPath id="tube"><rect x="44" y="12" width="32" height="188" rx="16"/></clipPath></defs>
-<rect x="44" y="12" width="32" height="188" rx="16" fill="#0000" stroke="#FFFFFF" stroke-width="4"/>
-<rect id="fill" x="49" y="194" width="22" height="0" fill="#D38DA9" clip-path="url(#tube)"/>
-<circle cx="60" cy="210" r="37" fill="#D38DA9" stroke="#FFFFF" stroke-width="4"/>
-</svg>
-<div class="number"><span id="current"></span> <span class="pink">/</span> <span id="targetText"></span></div>
-<div class="small" id="percent"></div>
-<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="40000" aria-valuenow="21421" id="progress"><div class="progress-fill" id="progressFill"></div></div>
-<div class="remaining" id="remaining"></div>
-</main>
-<script>
-// OWNER SETTINGS: Edit these values in GitHub to update the public page.
-const CURRENT_TOTAL = 21421;
-const GOAL = 40000;
-// END OWNER SETTINGS
-const format = n => n.toLocaleString('en-AU');
-const ratio = Math.min(1, Math.max(0, CURRENT_TOTAL / GOAL));
-document.getElementById('current').textContent = format(CURRENT_TOTAL);
-document.getElementById('targetText').textContent = format(GOAL);
-document.getElementById('percent').textContent = (100 * CURRENT_TOTAL / GOAL).toFixed(1) + '% complete';
-document.getElementById('remaining').textContent = format(Math.max(0, GOAL - CURRENT_TOTAL)) + ' to go!';
-document.getElementById('fill').setAttribute('y', 194 - 176 * ratio);
-document.getElementById('fill').setAttribute('height', 176 * ratio);
-document.getElementById('progressFill').style.width = (ratio * 100) + '%';
-document.getElementById('progress').setAttribute('aria-valuemax', GOAL);
-document.getElementById('progress').setAttribute('aria-valuenow', CURRENT_TOTAL);
-</script>
+  <main class="poster">
+
+    <!-- ORIGINAL TITLE -->
+    <h1>Knock Every Door Brunswick</h1>
+
+    <div class="subtitle">
+      For the socialists (so better) ★
+    </div>
+
+    <!-- THERMOMETER -->
+    <svg class="thermometer"
+         viewBox="0 0 145 290"
+         role="img"
+         aria-label="Progress thermometer">
+
+      <defs>
+        <clipPath id="tube">
+          <rect x="56" y="14"
+                width="33" height="187" rx="16"/>
+        </clipPath>
+      </defs>
+
+      <!-- White thermometer tube -->
+      <rect x="56" y="14"
+            width="33" height="187" rx="16"
+            fill="#FFFFFF"
+            stroke="#080808"
+            stroke-width="4"/>
+
+      <!-- Black liquid filling -->
+      <rect id="fill"
+            x="61" y="194"
+            width="23" height="0"
+            fill="#080808"
+            clip-path="url(#tube)"/>
+
+      <!-- Thermometer bulb -->
+      <circle cx="72.5" cy="211" r="37"
+              fill="#080808"
+              stroke="#FFFFFF"
+              stroke-width="3"/>
+    </svg>
+
+    <!-- PROGRESS NUMBERS -->
+    <div class="number">
+      <span id="current">21,421</span>
+      /
+      <span id="targetText">40,000</span>
+    </div>
+
+    <div class="percent" id="percent">
+      53.6% COMPLETE
+    </div>
+
+    <!-- PROGRESS BAR -->
+    <div class="progress"
+         role="progressbar"
+         aria-label="Progress towards goal"
+         aria-valuemin="0"
+         aria-valuemax="40000"
+         aria-valuenow="21421"
+         id="progress">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <div class="remaining" id="remaining">
+      18,579 TO GO!
+    </div>
+
+    <!-- TWO FIVE-POINT STARS -->
+    <footer>
+      <div class="stars" aria-hidden="true">★ ★</div>
+      KNOCK EVERY DOOR · BRUNSWICK
+    </footer>
+
+  </main>
+
+  <script>
+    // =================================
+    // OWNER SETTINGS
+    // Change the number here to update
+    // your public thermometer.
+    // =================================
+
+    const CURRENT_TOTAL = 21421;
+    const GOAL = 40000;
+
+    // AUTOMATIC CALCULATIONS
+
+    const format = n => n.toLocaleString('en-AU');
+
+    const ratio = Math.min(
+      1,
+      Math.max(0, CURRENT_TOTAL / GOAL)
+    );
+
+    document.getElementById('current').textContent =
+      format(CURRENT_TOTAL);
+
+    document.getElementById('targetText').textContent =
+      format(GOAL);
+
+    document.getElementById('percent').textContent =
+      (100 * CURRENT_TOTAL / GOAL).toFixed(1)
+      + '% COMPLETE';
+
+    document.getElementById('remaining').textContent =
+      format(Math.max(0, GOAL - CURRENT_TOTAL))
+      + ' TO GO!';
+
+    // Fill thermometer
+    document.getElementById('fill')
+      .setAttribute('y', 194 - 176 * ratio);
+
+    document.getElementById('fill')
+      .setAttribute('height', 176 * ratio);
+
+    // Fill progress bar
+    document.getElementById('progressFill')
+      .style.width = (ratio * 100) + '%';
+
+    // Accessibility
+    document.getElementById('progress')
+      .setAttribute('aria-valuemax', GOAL);
+
+    document.getElementById('progress')
+      .setAttribute('aria-valuenow', CURRENT_TOTAL);
+  </script>
 </body>
 </html>
